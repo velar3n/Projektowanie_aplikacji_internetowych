@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yummy</title>
+        <link rel="icon" href="/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="/stylesheets/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+
+    <body>
+        <!-- header with logo + navbar -->
+        <%- include('components/navbar') %>
+
+        <!-- main site -->
+        <div class="main">
+            <div class="login_box">
+                <div class="login_container">
+                    <h2><%= recipe ? "Edit Recipe" : "Add a recipe" %><strong>.</strong></h2>
+
+                    <form class="login_form" id="login_formID" 
+                        action="<%= isEdit ? '/recipes/' + recipe._id + '?_method=PUT' : '/add_recipe' %>" 
+                        method="post" 
+                        enctype="multipart/form-data">
+
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="<%= recipe?.title || '' %>" required />
+
+                        <label for="category">Category</label>
+                        <select name="category" id="category" required>
+                            <option hidden disabled <%= !recipe ? "selected" : "" %>>Select a category</option>
+                            <% ["Main", "Appetizer", "Dessert", "Drinks", "Snacks"].forEach(cat => { %>
+                            <option value="<%= cat %>" <%= recipe?.category === cat ? "selected" : "" %>><%= cat %></option>
+                            <% }) %>
+                        </select>
+
+
+                        <label for="time">Total time [min]</label>
+                        <input type="text" id="time" name="time" pattern="[0-9]+$" value="<%= recipe?.time || '' %>" required />
+
+                        <label for="servings">Servings</label>
+                        <input type="text" id="servings" name="servings" pattern="[0-9]+$" value="<%= recipe?.servings || '' %>" required />
+
+                        <label for="difficulty">Difficulty</label>
+                        <select name="difficulty" id="difficulty" required>
+                            <option hidden disabled <%= !recipe ? "selected" : "" %>>Select a difficulty</option>
+                            <% ["Easy", "Medium", "Hard"].forEach(level => { %>
+                            <option value="<%= level %>" <%= recipe?.difficulty === level ? "selected" : "" %>><%= level %></option>
+                            <% }) %>
+                        </select>
+
+                        <div class="add_container">
+                            <div class="add_container_child">
+                            <label>Ingredients</label>
+                            <div class="add_ingr_line" id="add_ingr_line">
+                                <% (recipe?.ingredients || ['']).forEach(ingredient => { %>
+                                <div><input type="text" name="ingredients" value="<%= ingredient %>" required /></div>
+                                <% }) %>
+                            </div>
+                            <button type="button" class="add_btn" onclick="addLine()">Add ingredient</button>
+                            <button type="button" class="remove_btn" onclick="removeLine()">Remove ingredient</button>
+                            </div>
+
+                            <div class="add_container_child">
+                            <label>Step-by-step instructions</label>
+                            <div class="add_desc_line" id="add_desc_line">
+                                <% (recipe?.instructions || ['']).forEach(instruction => { %>
+                                <div><textarea name="instructions" required><%= instruction %></textarea></div>
+                                <% }) %>
+                            </div>
+                            <button type="button" class="add_btn" onclick="addLineD()">Add step</button>
+                            <button type="button" class="remove_btn" onclick="removeLineD()">Remove step</button>
+                            </div>
+                        </div>
+
+                        <label for="photo">Image</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" <%= recipe ? "" : "required" %> />
+
+                        <div class="button_container_bg">
+                            <button class="login_btn" type="submit"><%= recipe ? "Update recipe" : "Add recipe" %></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- footer -->
+        <%- include('components/footer') %>
+
+        <script>
+            function addLine() {
+                const container = document.getElementById('add_ingr_line');
+                const div = document.createElement("div");
+                div.innerHTML = '<input type="text" name="ingredients" required />';
+                container.appendChild(div);
+            }
+
+            function removeLine() {
+                const container = document.getElementById('add_ingr_line');
+                if (container.children.length > 1) container.removeChild(container.lastChild);
+            }
+
+            function addLineD() {
+                const container = document.getElementById('add_desc_line');
+                const div = document.createElement("div");
+                div.innerHTML = '<textarea name="instructions" required></textarea>';
+                container.appendChild(div);
+            }
+
+            function removeLineD() {
+                const container = document.getElementById('add_desc_line');
+                if (container.children.length > 1) container.removeChild(container.lastChild);
+            }
+        </script>
+    </body>
+</html>

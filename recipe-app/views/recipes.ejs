@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yummy</title>
+        <link rel="icon" href="/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="/stylesheets/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+
+    <body>
+        <!-- header with logo + navbar -->
+        <%- include('components/navbar') %>
+
+        <!-- main site -->
+        <div class="main">
+            <!-- change number of recipes automatically -->
+            <div class="section">
+                <div class="recipesite_container">
+                    <h1>Your delicious recipes</h1>
+                </div>
+            </div>
+            <!-- dodać active tab!!! -->
+            <div class="section">
+                <div class="filter_container">
+                    <div class="filter_tab" id="filter_tab_id">
+                        <a id="btn-filter" name="recipe_post_container" class="filter_button tab_active">
+                            <p>All</p>
+                        </a>
+                        <a id="btn-filter" name="Appetizer" class="filter_button">
+                            <p>Appetizer</p>
+                        </a>
+                        <a id="btn-filter" name="Main" class="filter_button">
+                            <p>Main</p>
+                        </a>
+                        <a id="btn-filter" name="Dessert" class="filter_button">
+                            <p>Dessert</p>
+                        </a>
+                        <a id="btn-filter" name="Drinks" class="filter_button">
+                            <p>Drinks</p>
+                        </a>
+                        <a id="btn-filter" name="Snacks" class="filter_button">
+                            <p>Snacks</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="container">
+                    <article class="popular_list">
+                        <div role="list" class="popular_list_posts">
+                            <% recipes.forEach(recipe => { %>
+                            <div role="listitem" class="recipe_post_container <%= recipe.category %> visible">
+                                    <a href="/recipes/<%= recipe._id %>" class="recipe_post">
+                                        <div class="post_image_container">
+                                            <img src="/images/<%=recipe.photo_path%>">
+                                        </div>
+                                        <p> <%= recipe.time %> min</p>
+                                        <h3><%= recipe.title %></h3>
+                                        <p><%= recipe.category %></p>
+                                    </a>
+                            </div>
+                            <% }) %>
+                        </div>  
+                    </article>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- footer -->
+        <%- include('components/footer') %>
+
+        <script>
+
+            // show active filter
+            var btnContainer = document.getElementById("filter_tab_id");
+            var btns = btnContainer.getElementsByClassName("filter_button");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", function() {
+                    var current = document.getElementsByClassName("tab_active");
+                    current[0].className = current[0].className.replace(" tab_active", "");
+                    this.className += " tab_active";
+
+                    var category_name = this.getAttribute("name");
+                    var all_recipes = document.getElementsByClassName("recipe_post_container");
+                    for(var j = 0; j < all_recipes.length; j++) {
+                        all_recipes[j].className = all_recipes[j].className.replace(" visible", "");
+                    }
+                    var recipes_active = document.getElementsByClassName(category_name); 
+                    for(var k = 0; k < recipes_active.length; k++) {
+                        recipes_active[k].className += " visible";
+                    }
+                });
+            }
+
+            function showMenu() {
+                document.getElementById('navbar_logo').style.display = 'none';
+                document.getElementById('navbar').style.display = 'none';
+                document.getElementById('navbuttons').style.display = 'none';
+                document.getElementById('navbar2').style.display = 'flex';
+            }
+        </script>
+
+    </body>
+</html>

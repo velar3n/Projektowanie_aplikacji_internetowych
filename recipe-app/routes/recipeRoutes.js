@@ -1,63 +1,35 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 const router = express.Router();
-const Recipe = require('../models/Recipe');
+const recipeController = require('../controllers/recipeController');
 
-// Add recipe
-router.post('/', async (req, res) => {
-  try {
-    const recipe = new Recipe(req.body);
-    await recipe.save();
-    res.status(201).json(recipe);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+
+// Configure storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../public/images')); // save to public/images
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
   }
 });
 
-// Get all recipes
-router.get('/', async (req, res) => {
-  try {
-    const recipes = await Recipe.find();
-    res.json(recipes);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+const upload = multer({ storage });
 
-// Get recipe by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) return res.status(404).json({ error: 'Recipe not found' });
-    res.json(recipe);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
-// Update recipe
-router.put('/:id', async (req, res) => {
-  try {
-    const recipe = await Recipe.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!recipe) return res.status(404).json({ error: 'Recipe not found' });
-    res.json(recipe);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+// ========== EJS ROUTES ==========
+router.get('/recipes', recipeController.renderAllRecipesPage);
+router.get('/', recipeController.renderHomePage);
+router.get('/recipes/add', recipeController.renderAddRecipeForm);
+router.get('/recipes/:id/edit', recipeController.renderEditRecipeForm);
 
-// Delete recipe by ID
-router.delete('/:id', async (req, res) => {
-  try {
-    const recipe = await Recipe.findByIdAndDelete(req.params.id);
-    if (!recipe) return res.status(404).json({ error: 'Recipe not found' });
-    res.json({ message: 'Recipe deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// ========== API ROUTES ==========
+router.get('/recipes', recipeController.getAllRecipes);
+router.get('/recipes/:id', recipeController.getRecipeById);
+router.delete('/recipes/:id', recipeController.deleteRecipe);
+router.put('/recipes/:id', recipeController.updateRecipe);
+router.post('/recipes/add', upload.single('photo'), recipeController.createRecipe);
 
 module.exports = router;

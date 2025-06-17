@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Yummy</title>
+        <link rel="icon" href="/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="/stylesheets/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+
+    <body>
+        <!-- header with logo + navbar -->
+        <div class="header">
+            <div class="navbar_container">
+                <a href="/" aria-current="page" class="navbar_logo" id="navbar_logo">
+                    <img src="/images/logo.png" loading="lazy">
+                </a>
+                <nav class="navbar" id="navbar">
+                    <a href="/">Home</a>
+                    <a href="/recipes">Recipes</a>
+                </nav>
+                <div class="navbuttons" id="navbuttons">
+                    <button class="login_btn" onclick="editRecipe('<%= recipe._id %>')">Edit Recipe</button>
+                    <button class="login_btn" onclick="deleteRecipe('<%= recipe._id %>')">Delete Recipe</button>
+                    <div class="fa fa-bars" id="menu_btn" onclick="showMenu()"></div>
+                </div>
+                <nav class="navbar2" id="navbar2">
+                    <a href="/">Home</a>
+                    <a href="/recipes">Recipes</a>
+                    <button class="hidden_menu login_btn" onclick="editRecipe('<%= recipe._id %>')">Edit recipe</button>
+                    <button class="hidden_menu login_btn" onclick="deleteRecipe('<%= recipe._id %>')">Delete recipe</button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- main site -->
+        <div class="main">
+            <div class="recipe_header">
+                <div class="grid">
+                    <div class="recipe_image">
+                        <img height="1200" loading="lazy" width="1200" src="/images/<%=recipe.photo_path%>">
+                    </div>
+                    <div class="recipe_titlepart">
+                        <p><%= recipe.category %></p>
+                        <h1><%= recipe.title %></h1>
+                        <p></p>
+                        <div class="recipe_details">
+                            <div class="recipe_detail_container">
+                                <p>TIME</p>
+                                <h3><%= recipe.time %></h3>
+                                <p>Min</p>
+                            </div>
+                            <div class="recipe_detail_container">
+                                <p>SERVINGS</p>
+                                <h3><%= recipe.servings %></h3>
+                                <p>Servings</p>
+                            </div>
+                            <div class="recipe_detail_container">
+                                <p>DIFFICULTY</p>
+                                <h3><%= recipe.difficulty %></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recipe_content_container">
+                <div class="recipe_grid">
+                    <div class="ingredient_list_container">
+                        <div class="ingredient_list">
+                            <div class="ingredient_title">
+                                <h3>Ingredients</h3>
+                            </div>
+                            <div class="ingredient_box">
+                                <ul role="list">
+                                    <% recipe.ingredients.forEach(ingredient => { %>
+                                        <li><%= ingredient %></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="description_container">
+                        <div class="description_list">
+                            <h3>How to</h3>
+                            <ul role="list">
+                                <% recipe.instructions.forEach(step => { %>
+                                    <li><%= step %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- footer -->
+        <%- include('components/footer') %>
+
+        <script>
+            function showMenu() {
+                document.getElementById('navbar_logo').style.display = 'none';
+                document.getElementById('navbar').style.display = 'none';
+                document.getElementById('navbuttons').style.display = 'none';
+                document.getElementById('navbar2').style.display = 'flex';
+            }
+        </script>
+
+        <script>
+            function editRecipe(recipeId) {
+                // Redirect to the edit page
+                window.location.href = `/recipes/${recipeId}/edit`;
+            }
+
+            async function deleteRecipe(recipeId) {
+                const confirmed = confirm("Are you sure you want to delete this recipe?");
+                if (!confirmed) return;
+
+                try {
+                const response = await fetch(`/recipes/${recipeId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Recipe deleted');
+                    window.location.href = '/recipes';
+                } else {
+                    const data = await response.text();
+                    alert('Failed to delete recipe: ' + data);
+                }
+                } catch (err) {
+                console.error('Delete error:', err);
+                alert('An error occurred.');
+                }
+            }
+            </script>
+
+    </body>
+</html>
