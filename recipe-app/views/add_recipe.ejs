@@ -21,7 +21,7 @@
                     <h2><%= recipe ? "Edit Recipe" : "Add a recipe" %><strong>.</strong></h2>
 
                     <form class="login_form" id="login_formID" 
-                        action="<%= isEdit ? '/recipes/' + recipe._id + '?_method=PUT' : '/add_recipe' %>" 
+                        action="<%= isEdit ? '<%= baseUrl19 %>/recipes/' + recipe._id + '?_method=PUT' : '/add_recipe' %>" 
                         method="post" 
                         enctype="multipart/form-data">
 
