@@ -22,7 +22,7 @@ const upload = multer({ storage });
 // ========== EJS ROUTES ==========
 router.get('/recipes', recipeController.renderAllRecipesPage);
 router.get('/', recipeController.renderHomePage);
-router.get('/recipes/add', recipeController.renderAddRecipeForm);
+router.get('/recipes_add', recipeController.renderAddRecipeForm);
 router.get('/recipes/:id/edit', recipeController.renderEditRecipeForm);
 
 // ========== API ROUTES ==========
@@ -30,6 +30,6 @@ router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipes/:id', recipeController.getRecipeById);
 router.delete('/recipes/:id', recipeController.deleteRecipe);
 router.put('/recipes/:id', recipeController.updateRecipe);
-router.post('/recipes/add', upload.single('photo'), recipeController.createRecipe);
+router.post('/recipes_add', upload.single('photo'), recipeController.createRecipe);
 
 module.exports = router;
