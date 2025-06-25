@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Yummy</title>
-        <link rel="icon" href="/images/logo_hat.png" type="image/x-icon">
-        <link rel="stylesheet" href="/stylesheets/styles.css">
+        <link rel="icon" href="<%= baseUrl %>/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="<%= baseUrl %>/stylesheets/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
@@ -20,22 +20,22 @@
             <div class="section">
                 <div class="invitation">
                     <h1>Explore some of our <span><%= recipes.length %></span> delicious recipes!</h1>
-                    <a href="/recipes" class="more_btn">Learn more!</a>
+                    <a href="<%= baseUrl %>/recipes" class="more_btn">Learn more!</a>
                 </div>
             </div>
             <div class="section">
                 <div class="container">
                     <div class="popular_title">
                         <h1> Top picks </h1>
-                        <a href="/recipes" class="all_button">See all recipes</a>
+                        <a href="<%= baseUrl %>/recipes" class="all_button">See all recipes</a>
                     </div>
                     <article class="popular_list">
                         <div role="list" class="popular_list_posts">
                             <% recipes.slice(0, 4).forEach(recipe => { %>
                             <div role="listitem" class="recipe_post_container_home">
-                                    <a href="/recipes/<%= recipe._id %>" class="recipe_post">
+                                    <a href="<%= baseUrl %>/recipes/<%= recipe._id %>" class="recipe_post">
                                         <div class="post_image_container">
-                                            <img src="/images/<%=recipe.photo_path%>">
+                                            <img src="<%= baseUrl %>/images/<%=recipe.photo_path%>">
                                         </div>
                                         <p><%= recipe.time %> min</p>
                                         <h3><%= recipe.title %></h3>
@@ -51,15 +51,15 @@
                 <div class="container">
                     <div class="popular_title">
                         <h1>Latest recipes </h1>
-                        <a href="/recipes" class="all_button">See all recipes</a>
+                        <a href="<%= baseUrl %>/recipes" class="all_button">See all recipes</a>
                     </div>
                     <article class="popular_list">
                         <div role="list" class="popular_list_posts2">
                             <% recipes.slice(-4).forEach(recipe => { %>
                             <div role="listitem" class="recipe_post_container_home">
-                                    <a href="/recipes/<%= recipe.recipeId %>" class="recipe_post">
+                                    <a href="<%= baseUrl %>/recipes/<%= recipe.recipeId %>" class="recipe_post">
                                         <div class="post_image_container">
-                                            <img src="/images/<%=recipe.photo_path%>">
+                                            <img src="<%= baseUrl %>/images/<%=recipe.photo_path%>">
                                         </div>
                                         <p><%= recipe.time %> min</p>
                                         <h3><%= recipe.title %></h3>
