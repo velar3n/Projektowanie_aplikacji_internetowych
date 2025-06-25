@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Yummy</title>
-        <link rel="icon" href="<%= baseUrl %>/images/logo_hat.png" type="image/x-icon">
-        <link rel="stylesheet" href="<%= baseUrl %>/stylesheets/styles.css">
+        <link rel="icon" href="/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="/stylesheets/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
@@ -14,12 +14,12 @@
         <!-- header with logo + navbar -->
         <div class="header">
             <div class="navbar_container">
-                <a href="<%= baseUrl %>/" aria-current="page" class="navbar_logo" id="navbar_logo">
-                    <img src="<%= baseUrl %>/images/logo.png" loading="lazy">
+                <a href="/" aria-current="page" class="navbar_logo" id="navbar_logo">
+                    <img src="/images/logo.png" loading="lazy">
                 </a>
                 <nav class="navbar" id="navbar">
-                    <a href="<%= baseUrl %>/">Home</a>
-                    <a href="<%= baseUrl %>/recipes">Recipes</a>
+                    <a href="/">Home</a>
+                    <a href="/recipes">Recipes</a>
                 </nav>
                 <div class="navbuttons" id="navbuttons">
                     <button class="login_btn" onclick="editRecipe('<%= recipe._id %>')">Edit Recipe</button>
@@ -27,8 +27,8 @@
                     <div class="fa fa-bars" id="menu_btn" onclick="showMenu()"></div>
                 </div>
                 <nav class="navbar2" id="navbar2">
-                    <a href="<%= baseUrl %>/">Home</a>
-                    <a href="<%= baseUrl %>/recipes">Recipes</a>
+                    <a href="/">Home</a>
+                    <a href="/recipes">Recipes</a>
                     <button class="hidden_menu login_btn" onclick="editRecipe('<%= recipe._id %>')">Edit recipe</button>
                     <button class="hidden_menu login_btn" onclick="deleteRecipe('<%= recipe._id %>')">Delete recipe</button>
                 </nav>
@@ -40,7 +40,7 @@
             <div class="recipe_header">
                 <div class="grid">
                     <div class="recipe_image">
-                        <img height="1200" loading="lazy" width="1200" src="<%= baseUrl %>/images/<%=recipe.photo_path%>">
+                        <img height="1200" loading="lazy" width="1200" src="/images/<%=recipe.photo_path%>">
                     </div>
                     <div class="recipe_titlepart">
                         <p><%= recipe.category %></p>
