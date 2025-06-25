@@ -9,19 +9,20 @@ const recipeRoutes = require('./routes/recipeRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use('/p19', express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(process.env.BASE_URL || '/', express.static(path.join(__dirname, 'public')));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.locals.baseUrl = process.env.BASE_URL || '/';
-  next();
-});
+app.use('/19', recipeRoutes);
 
-app.use(process.env.BASE_URL || '/', recipeRoutes);
+app.get('/', (req, res) => {
+  res.redirect('/p19/');
+});
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
