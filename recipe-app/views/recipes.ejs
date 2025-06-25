@@ -25,7 +25,7 @@
             <!-- dodać active tab!!! -->
             <div class="section">
                 <div class="filter_container">
-                    <div class="filter_tab" id="filter_tab_id">
+                    <div class="filter_tab" id="filter_tabid">
                         <a id="btn-filter" name="recipe_post_container" class="filter_button tab_active">
                             <p>All</p>
                         </a>
@@ -53,7 +53,7 @@
                         <div role="list" class="popular_list_posts">
                             <% recipes.forEach(recipe => { %>
                             <div role="listitem" class="recipe_post_container <%= recipe.category %> visible">
-                                    <a href="<%= baseUrl19 %>/recipes/<%= recipe._id %>" class="recipe_post">
+                                    <a href="<%= baseUrl19 %>/recipes/<%= recipe.id %>" class="recipe_post">
                                         <div class="post_image_container">
                                             <img src="images/<%=recipe.photo_path%>">
                                         </div>
@@ -76,7 +76,7 @@
         <script>
 
             // show active filter
-            var btnContainer = document.getElementById("filter_tab_id");
+            var btnContainer = document.getElementById("filter_tabid");
             var btns = btnContainer.getElementsByClassName("filter_button");
             for (var i = 0; i < btns.length; i++) {
                 btns[i].addEventListener("click", function() {

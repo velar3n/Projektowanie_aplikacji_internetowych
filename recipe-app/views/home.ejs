@@ -33,7 +33,7 @@
                         <div role="list" class="popular_list_posts">
                             <% recipes.slice(0, 4).forEach(recipe => { %>
                             <div role="listitem" class="recipe_post_container_home">
-                                    <a href="<%= baseUrl19 %>/recipes/<%= recipe._id %>" class="recipe_post">
+                                    <a href="<%= baseUrl19 %>/recipes/<%= recipe.id %>" class="recipe_post">
                                         <div class="post_image_container">
                                             <img src="images/<%=recipe.photo_path%>">
                                         </div>
