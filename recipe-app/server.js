@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use((req, res, next) => {
-  res.locals.baseUrl = BASE_URL;
+  res.locals.baseUrl19 = BASE_URL;
   next();
 });
 
