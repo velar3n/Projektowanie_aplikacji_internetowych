@@ -1,10 +1,10 @@
 require("dotenv").config();
 
 const express = require('express');
-const mongoose = require('mongoose');
 const path = require('path');
 const methodOverride = require('method-override');
 const recipeRoutes = require('./routes/recipeRoutes');
+const sequelize = require('./sequelize');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,13 +24,13 @@ app.get('/', (req, res) => {
   res.redirect('/p19/');
 });
 
-mongoose.connect(process.env.MONGODB_URI)
+sequelize.authenticate()
   .then(() => {
-    console.log('MongoDB connected');
+    console.log('SQLite connected');
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
   })
   .catch(err => {
-    console.error('MongoDB connection error:', err);
-});
+    console.error('SQLite connection error:', err);
+  });
