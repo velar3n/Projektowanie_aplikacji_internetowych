@@ -13,7 +13,12 @@ const BASE_URL = process.env.BASE_URL || `/`;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(BASE_URL, express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+  res.locals.baseUrl = BASE_URL;
+  next();
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.json());
