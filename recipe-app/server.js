@@ -19,11 +19,11 @@ app.use(methodOverride('_method'));
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.locals.baseUrl = BASE_URL;
+  res.locals.baseUrl19 = BASE_URL;
   next();
 });
 
-app.use('/', recipeRoutes);
+app.use(BASE_URL, recipeRoutes);
 
 sequelize.authenticate()
   .then(() => {
