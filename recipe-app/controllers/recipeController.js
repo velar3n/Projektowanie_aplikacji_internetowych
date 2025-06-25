@@ -4,7 +4,7 @@ const Recipe = require('../models/Recipe');
 
 exports.renderAllRecipesPage = async (req, res) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.findAll();
     res.render('recipes', { recipes });
   } catch (err) {
     res.status(500).send('Server error');
@@ -13,7 +13,7 @@ exports.renderAllRecipesPage = async (req, res) => {
 
 exports.renderHomePage = async (req, res) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.findAll();
     res.render('home', { recipes });
   } catch (err) {
     res.status(500).send('Server error');
@@ -25,8 +25,12 @@ exports.renderAddRecipeForm = (req, res) => {
 };
 
 exports.renderEditRecipeForm = async (req, res) => {
-    const recipe = await Recipe.findById(req.params.id);
+  try {
+    const recipe = await Recipe.findByPk(req.params.id);
     res.render('add_recipe', { recipe, isEdit: true });
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
 };
 
 // ========== API CONTROLLERS (JSON) ==========
@@ -34,36 +38,34 @@ exports.renderEditRecipeForm = async (req, res) => {
 exports.createRecipe = async (req, res) => {
   try {
     const photoPath = req.file ? req.file.filename : null;
-    const recipe = new Recipe({
+    const recipe = await Recipe.create({
       ...req.body,
       photo_path: photoPath
     });
     await recipe.save();
-
-    res.redirect(`/recipes/${recipe._id}`);
+    res.redirect(`/recipes/${recipe.id}`);
   } catch (err) {
     res.status(400).render('add_recipe', { 
       error: err.message, 
-      formData: req.body });
+      formData: req.body 
+    });
   }
 };
-
 
 exports.getAllRecipes = async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = category && category !== "recipe_post_container" ? { category } : {};
-    const recipes = await Recipe.find(filter);
+    const filter = category && category !== "recipe_post_container" ? { where: { category } } : {};
+    const recipes = await Recipe.findAll(filter);
     res.json(recipes);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-
 exports.getRecipeById = async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
+    const recipe = await Recipe.findByPk(req.params.id);
     if (!recipe) return res.status(404).render('404');
     res.render('recipe_post', { recipe });
   } catch (err) {
@@ -91,19 +93,24 @@ exports.updateRecipe = async (req, res) => {
       updatedData.photo_path = req.file.filename;
     }
 
-    const recipe = await Recipe.findByIdAndUpdate(req.params.id, updatedData, { new: true });
-    res.redirect(`/recipes/${recipe._id}`);
+    const recipe = await Recipe.findByPk(req.params.id);
+    if (!recipe) return res.status(404).render('404');
+    await recipe.update(updatedData);
+
+    res.redirect(`/recipes/${recipe.id}`);
   } catch (err) {
     res.status(400).render('recipes', { 
       error: err.message, 
-      formData: req.body });
+      formData: req.body 
+    });
   }
 };
 
 exports.deleteRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.findByIdAndDelete(req.params.id);
+    const recipe = await Recipe.findByPk(req.params.id);
     if (!recipe) return res.status(404).json({ error: 'Recipe not found' });
+    await recipe.destroy();
     res.json({ message: 'Recipe deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
