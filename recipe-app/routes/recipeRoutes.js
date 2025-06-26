@@ -29,7 +29,7 @@ router.get('/recipes/:id/edit', recipeController.renderEditRecipeForm);
 router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipes/:id', recipeController.getRecipeById);
 router.delete('/recipes/:id', recipeController.deleteRecipe);
-router.put('/recipes/:id', recipeController.updateRecipe);
+router.put('/recipes/:id', upload.single('photo'), recipeController.updateRecipe);
 router.post('/recipes_add', upload.single('photo'), recipeController.createRecipe);
 
 module.exports = router;
