@@ -20,15 +20,15 @@
         </div>
 
         <nav class="navbar2" id="navbar2">
-            <button class="hidden_menu" onclick="hideMenu()">Exit Menu</button>
+            <button class="text_button" onclick="hideMenu()">Exit Menu</button>
             <a href="<%= baseUrl19 %>/">Home</a>
             <a href="<%= baseUrl19 %>/recipes">Recipes</a>
             <% if (showAddButton) { %>
-                <a href="<%= baseUrl19 %>/recipes_add" class="hidden_menu">Add Recipe</a>
+                <a href="<%= baseUrl19 %>/recipes_add">Add Recipe</a>
             <% } %>
             <% if (showEditDelete) { %>
-                <button class="hidden_menu" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
-                <button class="hidden_menu" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
+                <button class="text_button" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
+                <button class="text_button" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
             <% } %>
         </nav>
 
