@@ -55,7 +55,12 @@
                             <div class="add_container_child">
                             <label>Ingredients</label>
                             <div class="add_ingr_line" id="add_ingr_line">
-                                <% (Array.isArray(recipe.ingredients) ? recipe.ingredients : [recipe.ingredients]).forEach(ingredient => { %>
+                                <% 
+                                    const ingredients = (recipe && Array.isArray(recipe.ingredients)) 
+                                        ? recipe.ingredients 
+                                        : (recipe && recipe.ingredients ? [recipe.ingredients] : ['']);
+                                    ingredients.forEach(ingredient => { 
+                                %>
                                 <div><input type="text" name="ingredients" value="<%= ingredient %>" required /></div>
                                 <% }) %>
                             </div>
@@ -66,7 +71,12 @@
                             <div class="add_container_child">
                             <label>Step-by-step instructions</label>
                             <div class="add_desc_line" id="add_desc_line">
-                               <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => { %>
+                                <% 
+                                    const instructions = (recipe && Array.isArray(recipe.instructions)) 
+                                        ? recipe.instructions 
+                                        : (recipe && recipe.instructions ? [recipe.instructions] : ['']);
+                                    instructions.forEach(step => { 
+                                %>
                                 <div><textarea name="instructions" required><%= step %></textarea></div>
                                 <% }) %>
                             </div>
