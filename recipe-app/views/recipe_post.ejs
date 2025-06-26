@@ -78,49 +78,8 @@
             </div>
         </div>
 
-
         <!-- footer -->
         <%- include('components/footer') %>
-
-        <script>
-            function showMenu() {
-                document.getElementById('navbar_logo').style.display = 'none';
-                document.getElementById('navbar').style.display = 'none';
-                document.getElementById('navbuttons').style.display = 'none';
-                document.getElementById('navbar2').style.display = 'flex';
-            }
-        </script>
-
-        <script>
-            const baseUrl = "<%= baseUrl19 %>";
-
-            function editRecipe(recipeId) {
-                // Redirect to the edit page
-                window.location.href = `${baseUrl}/recipes/${recipeId}/edit`;
-            }
-
-            async function deleteRecipe(recipeId) {
-                const confirmed = confirm("Are you sure you want to delete this recipe?");
-                if (!confirmed) return;
-
-                try {
-                const response = await fetch(`${baseUrl}/recipes/${recipeId}`, {
-                    method: 'DELETE'
-                });
-
-                if (response.ok) {
-                    alert('Recipe deleted');
-                    window.location.href = `${baseUrl}/recipes`;
-                } else {
-                    const data = await response.text();
-                    alert('Failed to delete recipe: ' + data);
-                }
-                } catch (err) {
-                console.error('Delete error:', err);
-                alert('An error occurred.');
-                }
-            }
-            </script>
 
     </body>
 </html>

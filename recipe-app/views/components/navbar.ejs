@@ -20,15 +20,60 @@
         </div>
 
         <nav class="navbar2" id="navbar2">
+            <div class="fa fa-times" id="close_btn" onclick="showMenu()"></div>
             <a href="<%= baseUrl19 %>/">Home</a>
             <a href="<%= baseUrl19 %>/recipes">Recipes</a>
             <% if (showAddButton) { %>
                 <a href="<%= baseUrl19 %>/recipes_add" class="hidden_menu">Add Recipe</a>
             <% } %>
             <% if (showEditDelete) { %>
-                <button class="hidden_menu login_btn" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
-                <button class="hidden_menu login_btn" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
+                <button class="hidden_menu" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
+                <button class="hidden_menu" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
             <% } %>
-            </nav>
+        </nav>
+
+        <script>
+            const baseUrl = "<%= baseUrl19 %>";
+
+            function showMenu() {
+                document.getElementById('navbar_logo').style.display = 'none';
+                document.getElementById('navbar').style.display = 'none';
+                document.getElementById('navbuttons').style.display = 'none';
+                document.getElementById('navbar2').style.display = 'flex';
+            }
+
+            function hideMenu() {
+                document.getElementById('navbar_logo').style.display = 'block';
+                document.getElementById('navbar').style.display = 'flex';
+                document.getElementById('navbuttons').style.display = 'flex';
+                document.getElementById('navbar2').style.display = 'none';
+            }
+
+            function editRecipe(recipeId) {
+                window.location.href = `${baseUrl}/recipes/${recipeId}/edit`;
+            }
+
+            async function deleteRecipe(recipeId) {
+                const confirmed = confirm("Are you sure you want to delete this recipe?");
+                if (!confirmed) return;
+
+                try {
+                const response = await fetch(`${baseUrl}/recipes/${recipeId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Recipe deleted');
+                    window.location.href = `${baseUrl}/recipes`;
+                } else {
+                    const data = await response.text();
+                    alert('Failed to delete recipe: ' + data);
+                }
+                } catch (err) {
+                console.error('Delete error:', err);
+                alert('An error occurred.');
+                }
+            }
+        </script>
     </div>
 </div>

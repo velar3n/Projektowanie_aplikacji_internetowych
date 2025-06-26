@@ -792,6 +792,14 @@ span {
         font-size: 3rem;
     }
 
+    #close_btn {
+        display: inline-block;
+        cursor: pointer;
+        margin-right: 3rem;
+        font-size: 3rem;
+        align-self: flex-end;
+    }
+
     .navbuttons .login_btn {
         display: none;
     }
