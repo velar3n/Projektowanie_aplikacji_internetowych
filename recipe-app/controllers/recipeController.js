@@ -1,4 +1,5 @@
 const Recipe = require('../models/Recipe');
+const baseUrl = "<%= baseUrl19 %>";
 
 // ========== PAGE CONTROLLERS (EJS) ==========
 
@@ -43,7 +44,7 @@ exports.createRecipe = async (req, res) => {
       photo_path: photoPath
     });
     await recipe.save();
-    res.redirect(`/recipes/${recipe.id}`);
+    res.redirect(`${baseUrl}/recipes/${recipe.id}`);
   } catch (err) {
     res.status(400).render('add_recipe', { 
       error: err.message, 
@@ -97,9 +98,9 @@ exports.updateRecipe = async (req, res) => {
     if (!recipe) return res.status(404).render('404');
     await recipe.update(updatedData);
 
-    res.redirect(`/recipes/${recipe.id}`);
+    res.redirect(`${baseUrl}/recipes/${recipe.id}`);
   } catch (err) {
-    res.status(400).render('recipe_post', { 
+    res.status(400).render('add_recipe', { 
       error: err.message, 
       formData: req.body 
     });
