@@ -75,7 +75,7 @@
                             </div>
                             <div class="ingredient_box">
                                 <ul role="list">
-                                    <% recipe.ingredients.forEach(ingredient => { %>
+                                    <% (Array.isArray(recipe.ingredients) ? recipe.ingredients : [recipe.ingredients]).forEach(ingredient => { %>
                                         <li><%= ingredient %></li>
                                     <% }) %>
                                 </ul>
@@ -86,7 +86,7 @@
                         <div class="description_list">
                             <h3>How to</h3>
                             <ul role="list">
-                                <% recipe.instructions.forEach(step => { %>
+                                <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => {
                                     <li><%= step %></li>
                                 <% }) %>
                             </ul>
@@ -110,9 +110,11 @@
         </script>
 
         <script>
+            const baseUrl = "<%= baseUrl19 %>";
+
             function editRecipe(recipeId) {
                 // Redirect to the edit page
-                window.location.href = `<%= baseUrl19 %>/recipes/${recipeId}/edit`;
+                window.location.href = `${baseUrl}/recipes/${recipeId}/edit`;
             }
 
             async function deleteRecipe(recipeId) {
@@ -120,13 +122,13 @@
                 if (!confirmed) return;
 
                 try {
-                const response = await fetch(`/recipes/${recipeId}`, {
+                const response = await fetch(`${baseUrl}/recipes/${recipeId}`, {
                     method: 'DELETE'
                 });
 
                 if (response.ok) {
                     alert('Recipe deleted');
-                    window.location.href = '<%= baseUrl19 %>/recipes';
+                    window.location.href = `${baseUrl}/recipes`;
                 } else {
                     const data = await response.text();
                     alert('Failed to delete recipe: ' + data);

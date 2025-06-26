@@ -21,7 +21,7 @@
                     <h2><%= recipe ? "Edit Recipe" : "Add a recipe" %><strong>.</strong></h2>
 
                     <form class="login_form" id="login_formID" 
-                        action="<%= isEdit ? baseUrl19 + '/recipes/' + recipe.id + '?_method=PUT' : '/add_recipe' %>"
+                        action="<%= isEdit ? baseUrl19 + '/recipes/' + recipe.id + '?_method=PUT' : baseUrl19 + '/recipe_add' %>"
                         method="post" 
                         enctype="multipart/form-data">
 
@@ -55,7 +55,7 @@
                             <div class="add_container_child">
                             <label>Ingredients</label>
                             <div class="add_ingr_line" id="add_ingr_line">
-                                <% (recipe?.ingredients || ['']).forEach(ingredient => { %>
+                                <% (Array.isArray(recipe.ingredients) ? recipe.ingredients : [recipe.ingredients]).forEach(ingredient => { %>
                                 <div><input type="text" name="ingredients" value="<%= ingredient %>" required /></div>
                                 <% }) %>
                             </div>
@@ -66,8 +66,8 @@
                             <div class="add_container_child">
                             <label>Step-by-step instructions</label>
                             <div class="add_desc_line" id="add_desc_line">
-                                <% (recipe?.instructions || ['']).forEach(instruction => { %>
-                                <div><textarea name="instructions" required><%= instruction %></textarea></div>
+                               <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => {
+                                <div><textarea name="instructions" required><%= step %></textarea></div>
                                 <% }) %>
                             </div>
                             <button type="button" class="add_btn" onclick="addLineD()">Add step</button>
