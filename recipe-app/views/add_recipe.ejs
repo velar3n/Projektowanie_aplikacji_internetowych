@@ -66,7 +66,7 @@
                             <div class="add_container_child">
                             <label>Step-by-step instructions</label>
                             <div class="add_desc_line" id="add_desc_line">
-                               <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => {
+                               <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => { %>
                                 <div><textarea name="instructions" required><%= step %></textarea></div>
                                 <% }) %>
                             </div>

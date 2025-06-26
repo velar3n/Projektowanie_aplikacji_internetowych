@@ -86,7 +86,7 @@
                         <div class="description_list">
                             <h3>How to</h3>
                             <ul role="list">
-                                <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => {
+                                <% (Array.isArray(recipe.instructions) ? recipe.instructions : [recipe.instructions]).forEach(step => { %>
                                     <li><%= step %></li>
                                 <% }) %>
                             </ul>
