@@ -80,6 +80,7 @@ exports.getRecipeById = async (req, res) => {
 
 exports.updateRecipe = async (req, res) => {
   try {
+    console.log('Request body:', req.body);
     let ingredients = req.body.ingredients;
     if (!ingredients) ingredients = [];
     else if (!Array.isArray(ingredients)) ingredients = [ingredients];
