@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Yummy</title>
-        <link rel="icon" href="images/logo_hat.png" type="image/x-icon">
-        <link rel="stylesheet" href="stylesheets/styles.css">
+        <link rel="icon" href="<%= baseUrl19 %>/images/logo_hat.png" type="image/x-icon">
+        <link rel="stylesheet" href="<%= baseUrl19 %>/stylesheets/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
@@ -35,7 +35,7 @@
                             <div role="listitem" class="recipe_post_container_home">
                                     <a href="<%= baseUrl19 %>/recipes/<%= recipe.id %>" class="recipe_post">
                                         <div class="post_image_container">
-                                            <img src="images/<%=recipe.photo_path%>">
+                                            <img src="<%= baseUrl19 %>/images/<%=recipe.photo_path%>">
                                         </div>
                                         <p><%= recipe.time %> min</p>
                                         <h3><%= recipe.title %></h3>
@@ -59,7 +59,7 @@
                             <div role="listitem" class="recipe_post_container_home">
                                     <a href="<%= baseUrl19 %>/recipes/<%= recipe.recipeId %>" class="recipe_post">
                                         <div class="post_image_container">
-                                            <img src="images/<%=recipe.photo_path%>">
+                                            <img src="<%= baseUrl19 %>/images/<%=recipe.photo_path%>">
                                         </div>
                                         <p><%= recipe.time %> min</p>
                                         <h3><%= recipe.title %></h3>
