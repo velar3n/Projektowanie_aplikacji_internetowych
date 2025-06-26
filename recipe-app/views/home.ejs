@@ -19,35 +19,10 @@
 
         <!-- main site -->
         <div class="main">
-            <!-- change number of recipes automatically -->
             <div class="section">
                 <div class="invitation">
                     <h1>Explore your <span><%= recipes.length %></span> delicious recipes!</h1>
-                    <a href="<%= baseUrl19 %>/recipes" class="more_btn">Learn more!</a>
-                </div>
-            </div>
-            <div class="section">
-                <div class="container">
-                    <div class="popular_title">
-                        <h1> Top picks </h1>
-                        <a href="<%= baseUrl19 %>/recipes" class="all_button">See all recipes</a>
-                    </div>
-                    <article class="popular_list">
-                        <div role="list" class="popular_list_posts">
-                            <% recipes.slice(0, 4).forEach(recipe => { %>
-                            <div role="listitem" class="recipe_post_container_home">
-                                    <a href="<%= baseUrl19 %>/recipes/<%= recipe.id %>" class="recipe_post">
-                                        <div class="post_image_container">
-                                            <img src="<%= baseUrl19 %>/images/<%=recipe.photo_path%>">
-                                        </div>
-                                        <p><%= recipe.time %> min</p>
-                                        <h3><%= recipe.title %></h3>
-                                        <p><%= recipe.category %></p>
-                                    </a>
-                            </div>
-                            <% }) %>
-                        </div>  
-                    </article>
+                    <a href="<%= baseUrl19 %>/recipes" class="more_btn">Explore!</a>
                 </div>
             </div>
             <div class="section">

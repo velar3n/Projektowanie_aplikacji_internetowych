@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+// sqlite recipe model
 const Recipe = sequelize.define('Recipe', {
   title: {
     type: DataTypes.STRING,

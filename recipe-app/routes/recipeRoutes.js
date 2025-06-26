@@ -5,10 +5,9 @@ const router = express.Router();
 const recipeController = require('../controllers/recipeController');
 
 
-// Configure storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../public/images')); // save to public/images
+    cb(null, path.join(__dirname, '../public/images'));
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + '-' + file.originalname;
@@ -19,13 +18,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-// ========== EJS ROUTES ==========
+// ejs routes
 router.get('/recipes', recipeController.renderAllRecipesPage);
 router.get('/', recipeController.renderHomePage);
 router.get('/recipes_add', recipeController.renderAddRecipeForm);
 router.get('/recipes/:id/edit', recipeController.renderEditRecipeForm);
 
-// ========== API ROUTES ==========
+// api routes
 router.get('/recipes', recipeController.getAllRecipes);
 router.get('/recipes/:id', recipeController.getRecipeById);
 router.delete('/recipes/:id', recipeController.deleteRecipe);

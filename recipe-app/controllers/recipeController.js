@@ -2,7 +2,8 @@ const Recipe = require('../models/Recipe');
 
 const BASE_URL = process.env.BASE_URL || `/`;
 
-// ========== PAGE CONTROLLERS (EJS) ==========
+
+// ejs page controllers
 
 exports.renderAllRecipesPage = async (req, res) => {
   try {
@@ -35,7 +36,8 @@ exports.renderEditRecipeForm = async (req, res) => {
   }
 };
 
-// ========== API CONTROLLERS (JSON) ==========
+
+// api controllers
 
 exports.createRecipe = async (req, res) => {
   try {
