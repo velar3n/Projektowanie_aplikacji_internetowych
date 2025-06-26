@@ -12,7 +12,10 @@
 
     <body>
         <!-- header with logo + navbar -->
-        <%- include('components/navbar') %>
+        <%- include('components/navbar', {
+            showAddButton: true,
+            showEditDelete: false
+        }) %>
 
         <!-- main site -->
         <div class="main">
