@@ -100,7 +100,7 @@ exports.updateRecipe = async (req, res) => {
 
     res.redirect(`${baseUrl}/recipes/${recipe.id}`);
   } catch (err) {
-    res.status(400).render('add_recipe', { 
+    res.status(400).render('recipes', { 
       error: err.message, 
       formData: req.body 
     });
