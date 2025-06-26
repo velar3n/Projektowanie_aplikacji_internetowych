@@ -78,22 +78,6 @@ a {
     color: #CB214E;
 }
 
-.text_button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 0 1.5rem;
-    cursor: pointer;
-    display: inline-block;
-}
-
-.text_button:hover {
-    color: #CB214E;
-}
-
 .login_btn, .more_btn, .register_btn, .add_btn, .remove_btn {
     background-color: white;
     border: none;
@@ -107,7 +91,6 @@ a {
     cursor: pointer;
     margin-left: 2rem;
 }
-
 
 .navbar2 {
     display: none;

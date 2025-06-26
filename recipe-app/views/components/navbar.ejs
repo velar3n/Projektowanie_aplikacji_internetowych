@@ -13,22 +13,22 @@
                 <button class="login_btn" onclick="window.location.href='<%= baseUrl19 %>/recipes_add';">Add Recipe</button>
             <% } %>
             <% if (showEditDelete) { %>
-                <button class="login_btn" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
+                <button class="login_btn" onclick="window.location.href='<%= baseUrl19 %>/recipes/<%= recipe.id %>/edit'">Edit Recipe</button>
                 <button class="login_btn" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
             <% } %>
             <div class="fa fa-bars" id="menu_btn" onclick="showMenu()"></div>
         </div>
 
         <nav class="navbar2" id="navbar2">
-            <button class="text_button" onclick="hideMenu()">Exit Menu</button>
+            <a href="#" onclick="hideMenu()">Exit Menu</a>
             <a href="<%= baseUrl19 %>/">Home</a>
             <a href="<%= baseUrl19 %>/recipes">Recipes</a>
             <% if (showAddButton) { %>
                 <a href="<%= baseUrl19 %>/recipes_add">Add Recipe</a>
             <% } %>
             <% if (showEditDelete) { %>
-                <button class="text_button" onclick="editRecipe('<%= recipe.id %>')">Edit Recipe</button>
-                <button class="text_button" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</button>
+                <a href="<%= baseUrl19 %>/recipes/<%= recipe.id %>/edit">Edit Recipe</a>
+                <a href="#" onclick="deleteRecipe('<%= recipe.id %>')">Delete Recipe</a>
             <% } %>
         </nav>
 
@@ -47,10 +47,6 @@
                 document.getElementById('navbar').style.display = 'flex';
                 document.getElementById('navbuttons').style.display = 'flex';
                 document.getElementById('navbar2').style.display = 'none';
-            }
-
-            function editRecipe(recipeId) {
-                window.location.href = `${baseUrl}/recipes/${recipeId}/edit`;
             }
 
             async function deleteRecipe(recipeId) {
