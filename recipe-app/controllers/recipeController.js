@@ -1,5 +1,7 @@
 const Recipe = require('../models/Recipe');
 
+const BASE_URL = process.env.BASE_URL || `/`;
+
 // ========== PAGE CONTROLLERS (EJS) ==========
 
 exports.renderAllRecipesPage = async (req, res) => {
@@ -43,7 +45,7 @@ exports.createRecipe = async (req, res) => {
       photo_path: photoPath
     });
     await recipe.save();
-    res.redirect(`/`);
+    res.redirect(`${BASE_URL}/`);
   } catch (err) {
     res.status(400).render('home', { 
       error: err.message, 
@@ -97,7 +99,7 @@ exports.updateRecipe = async (req, res) => {
     if (!recipe) return res.status(404).render('404');
     await recipe.update(updatedData);
 
-    res.redirect(`/`);
+    res.redirect(`${BASE_URL}/`);
   } catch (err) {
     res.status(400).render('home', { 
       error: err.message, 
