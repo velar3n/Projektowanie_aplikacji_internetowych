@@ -47,9 +47,12 @@ exports.createRecipe = async (req, res) => {
     await recipe.save();
     res.redirect(`${BASE_URL}/`);
   } catch (err) {
+    const recipes = await Recipe.findAll();
     res.status(400).render('home', { 
       error: err.message, 
-      formData: req.body 
+      formData: req.body,
+      recipes: recipes,
+      baseUrl19: BASE_URL
     });
   }
 };
@@ -101,9 +104,12 @@ exports.updateRecipe = async (req, res) => {
 
     res.redirect(`${BASE_URL}/`);
   } catch (err) {
+    const recipes = await Recipe.findAll();
     res.status(400).render('home', { 
       error: err.message, 
-      formData: req.body 
+      formData: req.body,
+      recipes: recipes,
+      baseUrl19: BASE_URL
     });
   }
 };
