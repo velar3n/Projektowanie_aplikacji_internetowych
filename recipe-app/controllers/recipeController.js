@@ -1,6 +1,25 @@
 const Recipe = require('../models/Recipe');
+const fs = require('fs');
+const path = require('path');
 
 const BASE_URL = process.env.BASE_URL || `/`;
+
+
+// logging operations to file
+
+const logOperation = (operation, recipeId, details) => {
+  const logDir = path.join(__dirname, '..', 'logs');
+  const logFile = path.join(logDir, 'recipe_operations.log');
+  
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+  
+  const timestamp = new Date().toISOString();
+  const logEntry = `[${timestamp}] ${operation} - Recipe ID: ${recipeId} - ${details}\n`;
+  
+  fs.appendFileSync(logFile, logEntry);
+};
 
 
 // ejs page controllers
@@ -47,6 +66,9 @@ exports.createRecipe = async (req, res) => {
       photo_path: photoPath
     });
     await recipe.save();
+    
+    logOperation('CREATE', recipe.id, `Created recipe: ${recipe.title}`);
+    
     res.redirect(`${BASE_URL}/`);
   } catch (err) {
     const recipes = await Recipe.findAll();
@@ -98,12 +120,22 @@ exports.updateRecipe = async (req, res) => {
     };
 
     if (req.file) {
+      const oldRecipe = await Recipe.findByPk(req.params.id);
+      if (oldRecipe && oldRecipe.photo_path) {
+        const oldImagePath = path.join(__dirname, '..', 'public', 'images', oldRecipe.photo_path);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+          logOperation('DELETE_IMAGE', req.params.id, `Deleted old image: ${oldRecipe.photo_path}`);
+        }
+      }
       updatedData.photo_path = req.file.filename;
     }
 
     const recipe = await Recipe.findByPk(req.params.id);
     if (!recipe) return res.status(404).render('404');
     await recipe.update(updatedData);
+
+    logOperation('UPDATE', req.params.id, `Updated recipe: ${recipe.title}`);
 
     res.redirect(`${BASE_URL}/`);
   } catch (err) {
@@ -121,6 +153,17 @@ exports.deleteRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findByPk(req.params.id);
     if (!recipe) return res.status(404).json({ error: 'Recipe not found' });
+    
+    if (recipe.photo_path) {
+      const imagePath = path.join(__dirname, '..', 'public', 'images', recipe.photo_path);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        logOperation('DELETE_IMAGE', req.params.id, `Deleted image: ${recipe.photo_path}`);
+      }
+    }
+    
+    logOperation('DELETE', req.params.id, `Deleted recipe: ${recipe.title}`);
+    
     await recipe.destroy();
     res.json({ message: 'Recipe deleted successfully' });
   } catch (err) {

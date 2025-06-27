@@ -127,6 +127,15 @@
                 const container = document.getElementById('add_desc_line');
                 if (container.children.length > 1) container.removeChild(container.lastChild);
             }
+
+            document.getElementById('login_formID').addEventListener('submit', function(event) {
+                const form = this;
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    alert("Please fill in all required fields correctly.");
+                    form.reportValidity();
+                }
+            });
         </script>
     </body>
 </html>
